@@ -300,6 +300,48 @@
   .foot-links a { color:var(--muted); font-size:.86rem; transition:color .2s; }
   .foot-links a:hover { color:var(--neon); }
 
+  /* ---------- NAV LINK ---------- */
+  .nav-link { font-weight:700; font-size:.9rem; color:var(--muted); transition:color .2s; }
+  .nav-link:hover { color:var(--neon); }
+  @media(max-width:720px){ .nav-link{ display:none; } }
+
+  /* ---------- SEGUIMIENTO ---------- */
+  .track-section { background:linear-gradient(180deg,var(--bg-2),var(--bg)); }
+  .track-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  @media(max-width:860px){ .track-grid{ grid-template-columns:1fr 1fr; } }
+  @media(max-width:520px){ .track-grid{ grid-template-columns:1fr; } }
+  .track-step { position:relative; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:26px 22px; text-align:center; transition:transform .2s, border-color .2s; }
+  .track-step:hover { transform:translateY(-6px); border-color:rgba(198,255,46,.35); }
+  .track-step .ico { font-size:1.7rem; width:60px; height:60px; margin:0 auto 14px; border-radius:16px; display:grid; place-items:center; background:rgba(198,255,46,.1); }
+  .track-step h4 { font-size:1.05rem; margin-bottom:6px; }
+  .track-step p { color:var(--muted); font-size:.9rem; }
+  .track-step .step-n { position:absolute; top:12px; right:16px; font-family:'Anton'; color:transparent; -webkit-text-stroke:1px var(--line); font-size:1.5rem; }
+
+  /* ---------- PRICING ---------- */
+  .pricing { background:var(--bg-2); }
+  .pricing-grid { display:grid; grid-template-columns:1fr 1fr; gap:26px; max-width:900px; margin:0 auto; align-items:stretch; }
+  @media(max-width:760px){ .pricing-grid{ grid-template-columns:1fr; } }
+  .price-card { position:relative; background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:36px 30px; display:flex; flex-direction:column; }
+  .price-card.featured { background:linear-gradient(165deg,var(--bg-3),var(--bg-2)); border-color:transparent; }
+  .price-card.featured::before { content:""; position:absolute; inset:-1px; border-radius:20px; z-index:-1; background:linear-gradient(135deg,var(--neon),transparent 45%,var(--orange)); }
+  .price-tag-badge { position:absolute; top:-13px; left:50%; transform:translateX(-50%); font-size:.68rem; font-weight:800; letter-spacing:1px; text-transform:uppercase; background:linear-gradient(135deg,var(--neon),var(--orange)); color:#000; padding:6px 16px; border-radius:100px; white-space:nowrap; }
+  .price-name { font-family:'Anton'; font-size:1.5rem; letter-spacing:.5px; }
+  .price-sub { color:var(--muted); font-size:.9rem; margin:6px 0 20px; min-height:40px; }
+  .price-amount { display:flex; align-items:flex-end; gap:6px; margin-bottom:24px; }
+  .price-amount .amount { font-family:'Anton'; font-size:3rem; line-height:1; }
+  .price-amount .per { color:var(--muted); font-size:.9rem; padding-bottom:7px; }
+  .price-features { list-style:none; margin-bottom:28px; display:flex; flex-direction:column; gap:12px; flex:1; }
+  .price-features li { display:flex; gap:12px; align-items:flex-start; font-size:.94rem; color:var(--text); }
+  .price-features li .pc { flex:0 0 auto; width:22px; height:22px; border-radius:50%; background:rgba(198,255,46,.15); color:var(--neon); display:grid; place-items:center; font-size:.72rem; font-weight:900; margin-top:1px; }
+  .price-features li.muted-feat { color:var(--muted); }
+  .price-features li.muted-feat .pc { background:rgba(255,255,255,.05); color:var(--muted); }
+  .price-btn { text-align:center; font-weight:800; font-size:1rem; padding:16px; border-radius:100px; transition:transform .16s, box-shadow .2s, border-color .2s, background .2s; }
+  .price-btn.ghost { border:1px solid var(--line); color:var(--text); }
+  .price-btn.ghost:hover { border-color:var(--neon); background:rgba(198,255,46,.05); }
+  .price-btn.solid { background:linear-gradient(135deg,var(--neon),var(--neon-2)); color:#000; box-shadow:0 14px 34px -12px rgba(198,255,46,.5); }
+  .price-btn.solid:hover { transform:translateY(-3px); }
+  .price-note { text-align:center; color:var(--muted); font-size:.85rem; margin-top:28px; }
+
   .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s ease, transform .6s ease; }
   .reveal.in { opacity:1; transform:none; }
 </style>
@@ -310,7 +352,10 @@
 <header class="nav">
   <div class="wrap nav-inner">
     <a href="#" class="logo"><span class="bolt">⚡</span> FORJA</a>
-    <a href="#formulario" class="nav-cta">Crear mi rutina</a>
+    <div style="display:flex;align-items:center;gap:24px;">
+      <a href="#planes" class="nav-link">Planes</a>
+      <a href="#formulario" class="nav-cta">Crear mi rutina</a>
+    </div>
   </div>
 </header>
 
@@ -319,7 +364,7 @@
   <div class="grid-bg"></div>
   <div class="wrap hero-inner">
     <div>
-      <span class="kicker">100% Gratis · Sin tarjeta · Sin excusas</span>
+      <span class="kicker">Prueba gratis · Sin tarjeta · Cancela cuando quieras</span>
       <h1 class="display">
         Deja de sentirte<br><span class="stroke">perdido</span> en el<br><span class="neon-text">gimnasio.</span>
       </h1>
@@ -445,8 +490,71 @@
       <div class="ben reveal"><div class="check">✓</div><div><h4>Enfocado en tu meta</h4><p>Bajar de peso, ganar músculo, resistencia o fuerza. Cada objetivo entrena distinto.</p></div></div>
       <div class="ben reveal"><div class="check">✓</div><div><h4>Respeta tus lesiones</h4><p>Nos dices tus limitaciones y evitamos lo que pueda hacerte daño.</p></div></div>
       <div class="ben reveal"><div class="check">✓</div><div><h4>Progresión clara</h4><p>Sabrás cómo avanzar semana a semana sin estancarte.</p></div></div>
-      <div class="ben reveal"><div class="check">✓</div><div><h4>Cero coste, cero letra pequeña</h4><p>Es gratis de verdad. Solo necesitamos tu correo para enviártelo.</p></div></div>
+      <div class="ben reveal"><div class="check">✓</div><div><h4>Empiezas gratis</h4><p>Prueba tu primera rutina y un seguimiento sin pagar nada ni dejar tarjeta.</p></div></div>
     </div>
+  </div>
+</section>
+
+<!-- SEGUIMIENTO -->
+<section class="track-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Lo que nos hace diferentes</span>
+      <h2 class="display">Tu rutina <span class="neon-text">evoluciona</span> contigo</h2>
+      <p>Una rutina que nunca cambia te estanca. Con FORJA vuelves, nos cuentas cómo te fue y ajustamos tu entrenamiento para que sigas progresando semana a semana.</p>
+    </div>
+    <div class="track-grid">
+      <div class="track-step reveal"><span class="step-n">01</span><div class="ico">🏋️</div><h4>Entrenas</h4><p>Sigues tu rutina personalizada durante el ciclo.</p></div>
+      <div class="track-step reveal"><span class="step-n">02</span><div class="ico">📊</div><h4>Registras tu avance</h4><p>Nos cuentas tu progreso, energía, molestias o nuevos objetivos.</p></div>
+      <div class="track-step reveal"><span class="step-n">03</span><div class="ico">🤖</div><h4>La IA reajusta</h4><p>Recalculamos cargas, ejercicios y volumen según cómo respondió tu cuerpo.</p></div>
+      <div class="track-step reveal"><span class="step-n">04</span><div class="ico">📈</div><h4>Mejoras</h4><p>Recibes tu rutina actualizada y subes de nivel sin estancarte.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="planes" class="pricing">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Planes</span>
+      <h2 class="display">Empieza gratis,<br><span class="neon-text">progresa sin límites</span></h2>
+      <p>Prueba FORJA sin pagar nada. Cuando quieras seguimiento continuo, desbloquea todo por menos de lo que cuesta un café a la semana.</p>
+    </div>
+    <div class="pricing-grid">
+      <!-- Plan Prueba -->
+      <div class="price-card reveal">
+        <div class="price-name">Prueba</div>
+        <div class="price-sub">Para empezar y ver cómo funciona.</div>
+        <div class="price-amount"><span class="amount">$0</span><span class="per">gratis para siempre</span></div>
+        <ul class="price-features">
+          <li><span class="pc">✓</span> Tu rutina personalizada inicial</li>
+          <li><span class="pc">✓</span> Adaptada a tu nivel, tiempo y meta</li>
+          <li><span class="pc">✓</span> Respeta tus lesiones y limitaciones</li>
+          <li><span class="pc">✓</span> <strong>1 seguimiento</strong> para ajustar tu plan</li>
+          <li class="muted-feat"><span class="pc">✕</span> Seguimientos ilimitados</li>
+          <li class="muted-feat"><span class="pc">✕</span> Progresión automática continua</li>
+        </ul>
+        <a href="#formulario" class="price-btn ghost">Empezar gratis</a>
+      </div>
+      <!-- Plan Pro -->
+      <div class="price-card featured reveal">
+        <span class="price-tag-badge">⭐ Más popular</span>
+        <div class="price-name neon-text">FORJA Pro</div>
+        <div class="price-sub">Para quienes van en serio con su progreso.</div>
+        <div class="price-amount"><span class="amount">$4.990</span><span class="per">CLP / mes</span></div>
+        <ul class="price-features">
+          <li><span class="pc">✓</span> Todo lo del plan Prueba</li>
+          <li><span class="pc">✓</span> <strong>Seguimientos ilimitados</strong>, las veces que quieras</li>
+          <li><span class="pc">✓</span> Progresión automática: tu rutina evoluciona sola</li>
+          <li><span class="pc">✓</span> Historial de tu progreso guardado</li>
+          <li><span class="pc">✓</span> Cambia tu meta cuando quieras (grasa, hipertrofia, fuerza…)</li>
+          <li><span class="pc">✓</span> Reajuste ante nuevas lesiones o cambios</li>
+          <li><span class="pc">✓</span> Soporte prioritario</li>
+        </ul>
+        <a href="#formulario" class="price-btn solid">Empezar prueba gratis →</a>
+      </div>
+    </div>
+    <p class="price-note">🔒 Sin permanencia · Cancela cuando quieras · Siempre empiezas con la prueba gratis</p>
   </div>
 </section>
 
@@ -457,9 +565,9 @@
       <!-- form -->
       <div id="formView">
         <div class="form-head">
-          <span class="kicker">Empieza ahora</span>
+          <span class="kicker">Empieza tu prueba gratis</span>
           <h2 class="display">Construye tu <span class="neon-text">rutina</span></h2>
-          <p>Rellena los campos y recibe tu plan personalizado en tu correo. Todos los campos son obligatorios.</p>
+          <p>Rellena los campos y recibe <strong>gratis</strong> tu plan personalizado en tu correo. Sin tarjeta. Todos los campos son obligatorios.</p>
         </div>
 
         <form id="rutinaForm" novalidate>
@@ -582,8 +690,8 @@
     </div>
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q">¿De verdad es gratis? <span class="pm">+</span></button>
-        <div class="faq-a"><p>Sí, 100%. No pedimos tarjeta ni hay cargos ocultos. Solo necesitamos tu correo para enviarte el plan.</p></div>
+        <button class="faq-q">¿Cuánto cuesta? <span class="pm">+</span></button>
+        <div class="faq-a"><p>Empiezas <strong>gratis</strong>: obtienes tu rutina personalizada y un seguimiento para ajustarla, sin tarjeta. Si quieres seguimiento ilimitado y que tu plan evolucione contigo, el plan <strong>FORJA Pro</strong> cuesta $4.990 CLP al mes, sin permanencia y cancelas cuando quieras.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">Nunca he pisado un gimnasio, ¿es para mí? <span class="pm">+</span></button>
