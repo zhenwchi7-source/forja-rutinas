@@ -364,7 +364,7 @@
   <div class="grid-bg"></div>
   <div class="wrap hero-inner">
     <div>
-      <span class="kicker">Prueba gratis · Sin tarjeta · Cancela cuando quieras</span>
+      <span class="kicker">Prueba gratis · Cancela cuando quieras</span>
       <h1 class="display">
         Deja de sentirte<br><span class="stroke">perdido</span> en el<br><span class="neon-text">gimnasio.</span>
       </h1>
@@ -490,7 +490,7 @@
       <div class="ben reveal"><div class="check">✓</div><div><h4>Enfocado en tu meta</h4><p>Bajar de peso, ganar músculo, resistencia o fuerza. Cada objetivo entrena distinto.</p></div></div>
       <div class="ben reveal"><div class="check">✓</div><div><h4>Respeta tus lesiones</h4><p>Nos dices tus limitaciones y evitamos lo que pueda hacerte daño.</p></div></div>
       <div class="ben reveal"><div class="check">✓</div><div><h4>Progresión clara</h4><p>Sabrás cómo avanzar semana a semana sin estancarte.</p></div></div>
-      <div class="ben reveal"><div class="check">✓</div><div><h4>Empiezas gratis</h4><p>Prueba tu primera rutina y un seguimiento sin pagar nada ni dejar tarjeta.</p></div></div>
+      <div class="ben reveal"><div class="check">✓</div><div><h4>Empiezas gratis</h4><p>Prueba tu primera rutina y un seguimiento sin pagar nada.</p></div></div>
     </div>
   </div>
 </section>
@@ -508,6 +508,9 @@
       <div class="track-step reveal"><span class="step-n">02</span><div class="ico">📊</div><h4>Registras tu avance</h4><p>Nos cuentas tu progreso, energía, molestias o nuevos objetivos.</p></div>
       <div class="track-step reveal"><span class="step-n">03</span><div class="ico">🤖</div><h4>La IA reajusta</h4><p>Recalculamos cargas, ejercicios y volumen según cómo respondió tu cuerpo.</p></div>
       <div class="track-step reveal"><span class="step-n">04</span><div class="ico">📈</div><h4>Mejoras</h4><p>Recibes tu rutina actualizada y subes de nivel sin estancarte.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:44px;" class="reveal">
+      <a href="#seguimiento" class="btn-primary">Hacer mi seguimiento <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -567,7 +570,7 @@
         <div class="form-head">
           <span class="kicker">Empieza tu prueba gratis</span>
           <h2 class="display">Construye tu <span class="neon-text">rutina</span></h2>
-          <p>Rellena los campos y recibe <strong>gratis</strong> tu plan personalizado en tu correo. Sin tarjeta. Todos los campos son obligatorios.</p>
+          <p>Rellena los campos y recibe <strong>gratis</strong> tu plan personalizado en tu correo. Todos los campos son obligatorios.</p>
         </div>
 
         <form id="rutinaForm" novalidate>
@@ -681,6 +684,96 @@
   </div>
 </section>
 
+<!-- SEGUIMIENTO FORM -->
+<section id="seguimiento" class="form-section">
+  <div class="wrap">
+    <div class="form-shell reveal">
+      <div id="segFormView">
+        <div class="form-head">
+          <span class="kicker">¿Ya tienes tu rutina?</span>
+          <h2 class="display">Haz tu <span class="neon-text">seguimiento</span></h2>
+          <p>Cuéntanos cómo te fue y ajustamos tu plan para que sigas progresando. Recibirás tu rutina actualizada en tu correo.</p>
+        </div>
+
+        <form id="seguimientoForm" novalidate>
+          <input type="hidden" name="Formulario" value="seguimiento" />
+
+          <div class="grid2">
+            <div class="field">
+              <label for="segNombre">Nombre completo <span class="req">*</span></label>
+              <input type="text" id="segNombre" name="Nombre" placeholder="Ej: Ana Martínez" required />
+              <span class="err-msg">Escribe tu nombre.</span>
+            </div>
+            <div class="field">
+              <label for="segEmail">Correo electrónico <span class="req">*</span> <span class="hint">(el mismo de tu rutina)</span></label>
+              <input type="email" id="segEmail" name="Email" placeholder="tucorreo@email.com" required />
+              <span class="err-msg">Introduce un correo válido.</span>
+            </div>
+          </div>
+
+          <div class="grid2">
+            <div class="field">
+              <label for="segComoFue">¿Cómo te fue con la rutina? <span class="req">*</span></label>
+              <select id="segComoFue" name="Como_Fue" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option>Muy fácil, quiero más intensidad</option>
+                <option>Bien, quiero seguir progresando</option>
+                <option>Muy dura, necesito bajar un poco</option>
+              </select>
+              <span class="err-msg">Elige una opción.</span>
+            </div>
+            <div class="field">
+              <label for="segPeso">Peso actual (kg) <span class="req">*</span></label>
+              <input type="number" id="segPeso" name="Peso" min="30" max="300" step="0.1" placeholder="Ej: 71" required />
+              <span class="err-msg">Introduce tu peso actual.</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="segSensaciones">¿Cómo te sientes? <span class="req">*</span> <span class="hint">(energía, ánimo, avances)</span></label>
+            <textarea id="segSensaciones" name="Sensaciones" placeholder="Ej: Con más energía, noté progreso en fuerza pero me cuesta la última serie." required></textarea>
+            <span class="err-msg">Cuéntanos cómo te sientes.</span>
+          </div>
+
+          <div class="grid2">
+            <div class="field">
+              <label for="segLesion">¿Alguna nueva molestia o lesión? <span class="req">*</span></label>
+              <input type="text" id="segLesion" name="Nueva_Lesion" placeholder="Si no tienes, escribe 'Ninguna'." required />
+              <span class="err-msg">Escribe tu respuesta o "Ninguna".</span>
+            </div>
+            <div class="field">
+              <label for="segMeta">¿Quieres cambiar tu meta? <span class="req">*</span></label>
+              <select id="segMeta" name="Cambio_Meta" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option>No, mantener mi meta actual</option>
+                <option>Bajar de peso</option>
+                <option>Aumentar masa muscular / Hipertrofia</option>
+                <option>Mejorar resistencia</option>
+                <option>Fuerza general</option>
+              </select>
+              <span class="err-msg">Elige una opción.</span>
+            </div>
+          </div>
+
+          <div class="submit-wrap">
+            <button type="submit" class="btn-submit" id="segSubmitBtn">
+              📈 Ajustar mi Rutina
+            </button>
+            <p class="form-fine">🔒 Tus datos están seguros. Recibirás tu rutina actualizada por correo.</p>
+          </div>
+        </form>
+      </div>
+
+      <!-- success seguimiento -->
+      <div class="success" id="segSuccessView">
+        <div class="icon">✓</div>
+        <h3>¡Seguimiento recibido! 📈</h3>
+        <p>Estamos ajustando tu rutina según tu progreso. En breve recibirás tu plan actualizado en tu correo. <strong style="color:var(--neon)">¡A seguir sumando!</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section>
   <div class="wrap">
@@ -757,61 +850,68 @@ document.querySelectorAll('.faq-q').forEach(q=>{
   });
 });
 
-/* ---------- Form validation + submit ---------- */
-const form = document.getElementById('rutinaForm');
-const submitBtn = document.getElementById('submitBtn');
-
+/* ---------- Form validation + submit (reutilizable para ambos formularios) ---------- */
 function markField(el, ok){
   const field = el.closest('.field');
-  field.classList.toggle('invalid', !ok);
+  if(field) field.classList.toggle('invalid', !ok);
 }
 
-form.querySelectorAll('input,select,textarea').forEach(el=>{
-  el.addEventListener('blur',()=> markField(el, el.checkValidity() && el.value.trim()!==''));
-  el.addEventListener('input',()=>{ if(el.closest('.field').classList.contains('invalid')) markField(el, el.checkValidity() && el.value.trim()!==''); });
-});
+function initForm(formId, btnId, viewId, successId, loadingTxt){
+  const form = document.getElementById(formId);
+  if(!form) return;
+  const submitBtn = document.getElementById(btnId);
+  const fields = form.querySelectorAll('input:not([type=hidden]),select,textarea');
 
-form.addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  let valid = true;
-  form.querySelectorAll('input,select,textarea').forEach(el=>{
-    const ok = el.checkValidity() && el.value.trim()!=='';
-    markField(el, ok);
-    if(!ok) valid=false;
+  fields.forEach(el=>{
+    el.addEventListener('blur',()=> markField(el, el.checkValidity() && el.value.trim()!==''));
+    el.addEventListener('input',()=>{ const f=el.closest('.field'); if(f && f.classList.contains('invalid')) markField(el, el.checkValidity() && el.value.trim()!==''); });
   });
-  if(!valid){
-    const firstErr = form.querySelector('.field.invalid');
-    if(firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'});
-    return;
-  }
 
-  submitBtn.disabled = true;
-  const originalTxt = submitBtn.innerHTML;
-  submitBtn.innerHTML = '⏳ Generando tu plan...';
-
-  // Construye el payload con los nombres EXACTOS de las columnas
-  const data = new FormData(form);
-
-  try {
-    if (GOOGLE_SHEET_URL && !GOOGLE_SHEET_URL.startsWith("PEGA_AQUI")) {
-      await fetch(GOOGLE_SHEET_URL, { method:'POST', body:data });
-    } else {
-      // Modo demo: sin URL configurada. Simula el envío.
-      await new Promise(r=>setTimeout(r,900));
-      console.warn('⚠️ GOOGLE_SHEET_URL no configurada. Datos capturados:', Object.fromEntries(data.entries()));
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    let valid = true;
+    fields.forEach(el=>{
+      const ok = el.checkValidity() && el.value.trim()!=='';
+      markField(el, ok);
+      if(!ok) valid=false;
+    });
+    if(!valid){
+      const firstErr = form.querySelector('.field.invalid');
+      if(firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
     }
-    // Mostrar éxito
-    document.getElementById('formView').style.display='none';
-    const s = document.getElementById('successView');
-    s.classList.add('show');
-    s.scrollIntoView({behavior:'smooth', block:'center'});
-  } catch(err){
-    console.error(err);
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = originalTxt;
-    alert('Ups, hubo un problema al enviar. Revisa tu conexión e inténtalo de nuevo.');
-  }
-});
+
+    submitBtn.disabled = true;
+    const originalTxt = submitBtn.innerHTML;
+    submitBtn.innerHTML = loadingTxt;
+
+    // Construye el payload con los nombres EXACTOS de las columnas
+    const data = new FormData(form);
+
+    try {
+      if (GOOGLE_SHEET_URL && !GOOGLE_SHEET_URL.startsWith("PEGA_AQUI")) {
+        await fetch(GOOGLE_SHEET_URL, { method:'POST', body:data, mode:'no-cors' });
+      } else {
+        // Modo demo: sin URL configurada. Simula el envío.
+        await new Promise(r=>setTimeout(r,900));
+        console.warn('⚠️ GOOGLE_SHEET_URL no configurada. Datos capturados:', Object.fromEntries(data.entries()));
+      }
+      // Mostrar éxito
+      document.getElementById(viewId).style.display='none';
+      const s = document.getElementById(successId);
+      s.classList.add('show');
+      s.scrollIntoView({behavior:'smooth', block:'center'});
+    } catch(err){
+      console.error(err);
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalTxt;
+      alert('Ups, hubo un problema al enviar. Revisa tu conexión e inténtalo de nuevo.');
+    }
+  });
+}
+
+initForm('rutinaForm','submitBtn','formView','successView','⏳ Generando tu plan...');
+initForm('seguimientoForm','segSubmitBtn','segFormView','segSuccessView','⏳ Ajustando tu rutina...');
 </script>
 </body>
 </html>
