@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FORJA — Tu Rutina de Gimnasio Personalizada Gratis</title>
+<meta name="description" content="Deja de sentirte perdido en el gimnasio. Genera gratis una rutina de entrenamiento 100% personalizada según tu nivel, tu tiempo y tu meta. Sin personal trainer, sin excusas." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg:            #0a0a0c;
+    --bg-2:          #101014;
+    --bg-3:          #16161c;
+    --surface:       #1b1b22;
+    --line:          rgba(255,255,255,0.08);
+    --text:          #f4f4f5;
+    --muted:         #9a9aa5;
+    --neon:          #c6ff2e;   /* verde lima */
+    --neon-2:        #a5e600;
+    --orange:        #ff5b1a;   /* naranja energía */
+    --orange-2:      #ff7a3c;
+    --radius:        16px;
+    --maxw:          1180px;
+    --shadow-neon:   0 0 0 1px rgba(198,255,46,0.35), 0 18px 50px -12px rgba(198,255,46,0.45);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a { color:inherit; text-decoration:none; }
+  ::selection { background: var(--neon); color:#000; }
+
+  .wrap { max-width: var(--maxw); margin:0 auto; padding:0 24px; }
+
+  .display {
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    line-height:0.95;
+    font-weight:400;
+  }
+  .neon-text  { color: var(--neon); }
+  .orange-text{ color: var(--orange); }
+  .kicker {
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:0.78rem; font-weight:800; letter-spacing:2.5px;
+    text-transform:uppercase; color: var(--neon);
+    background: rgba(198,255,46,0.08);
+    border:1px solid rgba(198,255,46,0.25);
+    padding:8px 16px; border-radius:100px;
+  }
+  .kicker::before{
+    content:""; width:7px; height:7px; border-radius:50%;
+    background:var(--neon); box-shadow:0 0 10px var(--neon);
+    animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+
+  /* ---------- NAV ---------- */
+  header.nav {
+    position:sticky; top:0; z-index:50;
+    backdrop-filter:blur(14px);
+    background:rgba(10,10,12,0.72);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner { display:flex; align-items:center; justify-content:space-between; height:72px; }
+  .logo { display:flex; align-items:center; gap:10px; font-family:'Anton',sans-serif; font-size:1.5rem; letter-spacing:1px; }
+  .logo .bolt {
+    width:34px; height:34px; border-radius:9px;
+    background:linear-gradient(135deg,var(--neon),var(--orange));
+    display:grid; place-items:center; color:#000; font-size:1.1rem;
+    box-shadow:0 6px 18px -4px rgba(198,255,46,0.5);
+  }
+  .nav-cta {
+    font-family:'Inter'; font-weight:800; font-size:0.85rem;
+    background:var(--neon); color:#000; padding:11px 22px; border-radius:100px;
+    transition:transform .15s ease, box-shadow .2s ease;
+  }
+  .nav-cta:hover { transform:translateY(-2px); box-shadow:0 10px 24px -6px rgba(198,255,46,.6); }
+  @media(max-width:720px){ .nav-cta{display:none;} }
+
+  /* ---------- HERO ---------- */
+  .hero { position:relative; padding:90px 0 70px; overflow:hidden; }
+  .hero::before {
+    content:""; position:absolute; inset:0; z-index:0;
+    background:
+      radial-gradient(700px 500px at 82% 12%, rgba(255,91,26,0.18), transparent 60%),
+      radial-gradient(650px 520px at 8% 85%, rgba(198,255,46,0.14), transparent 60%);
+    pointer-events:none;
+  }
+  .grid-bg {
+    position:absolute; inset:0; z-index:0; opacity:.5;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size:52px 52px;
+    -webkit-mask-image:radial-gradient(circle at 50% 30%, #000, transparent 78%);
+            mask-image:radial-gradient(circle at 50% 30%, #000, transparent 78%);
+  }
+  .hero-inner { position:relative; z-index:2; display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center; }
+  @media(max-width:940px){ .hero-inner{ grid-template-columns:1fr; gap:40px; } }
+
+  .hero h1 { font-size:clamp(3rem, 7vw, 5.4rem); margin:22px 0 20px; }
+  .hero h1 .stroke {
+    -webkit-text-stroke:1.5px var(--neon); color:transparent;
+  }
+  .hero p.lead { font-size:1.18rem; color:var(--muted); max-width:540px; margin-bottom:32px; }
+  .hero p.lead strong { color:var(--text); font-weight:700; }
+
+  .hero-actions { display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .btn-primary {
+    font-family:'Inter'; font-weight:900; font-size:1.02rem; letter-spacing:.3px;
+    background:linear-gradient(135deg,var(--neon),var(--neon-2));
+    color:#000; padding:18px 34px; border-radius:100px; border:none; cursor:pointer;
+    display:inline-flex; align-items:center; gap:10px;
+    box-shadow:var(--shadow-neon); transition:transform .16s ease, box-shadow .2s ease;
+  }
+  .btn-primary:hover { transform:translateY(-3px) scale(1.02); }
+  .btn-primary .arrow { transition:transform .2s ease; }
+  .btn-primary:hover .arrow { transform:translateX(4px); }
+  .btn-ghost {
+    font-weight:700; font-size:0.95rem; color:var(--text);
+    padding:16px 26px; border-radius:100px; border:1px solid var(--line);
+    transition:border-color .2s, background .2s;
+  }
+  .btn-ghost:hover { border-color:var(--neon); background:rgba(198,255,46,0.05); }
+
+  .trust-row { display:flex; align-items:center; gap:18px; margin-top:34px; flex-wrap:wrap; }
+  .avatars { display:flex; }
+  .avatars span {
+    width:38px; height:38px; border-radius:50%; margin-left:-10px;
+    border:2px solid var(--bg); background:linear-gradient(135deg,#2a2a33,#3a3a45);
+    display:grid; place-items:center; font-size:0.9rem;
+  }
+  .avatars span:first-child{ margin-left:0; }
+  .stars { color:var(--neon); font-size:0.95rem; letter-spacing:2px; }
+  .trust-row small { color:var(--muted); font-size:0.85rem; }
+
+  /* hero card */
+  .hero-card {
+    position:relative;
+    background:linear-gradient(160deg, var(--bg-3), var(--bg-2));
+    border:1px solid var(--line); border-radius:24px; padding:30px;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,0.8);
+  }
+  .hero-card::after {
+    content:""; position:absolute; inset:-1px; border-radius:24px; z-index:-1;
+    background:linear-gradient(135deg, rgba(198,255,46,.5), transparent 40%, rgba(255,91,26,.4));
+    opacity:.6;
+  }
+  .hc-label { font-size:.72rem; letter-spacing:2px; color:var(--muted); text-transform:uppercase; font-weight:700; }
+  .hc-title { font-family:'Anton'; font-size:1.5rem; margin:6px 0 20px; letter-spacing:.5px; }
+  .day-row { display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-top:1px solid var(--line); }
+  .day-row:last-child{ border-bottom:1px solid var(--line); }
+  .day-name { font-weight:700; }
+  .day-focus { color:var(--muted); font-size:.9rem; }
+  .day-badge { font-size:.72rem; font-weight:800; padding:5px 12px; border-radius:100px; background:rgba(198,255,46,.12); color:var(--neon); }
+  .day-badge.o { background:rgba(255,91,26,.14); color:var(--orange-2); }
+  .hc-foot { margin-top:20px; font-size:.85rem; color:var(--muted); display:flex; align-items:center; gap:8px; }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee { border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--bg-2); overflow:hidden; padding:18px 0; }
+  .marquee-track { display:flex; gap:44px; white-space:nowrap; animation:scroll 26s linear infinite; }
+  .marquee span { font-family:'Anton'; font-size:1.5rem; letter-spacing:1px; color:var(--muted); display:inline-flex; align-items:center; gap:44px; }
+  .marquee span b { color:var(--neon); -webkit-text-stroke:0; }
+  @keyframes scroll { to { transform:translateX(-50%); } }
+
+  /* ---------- SECTION SHELL ---------- */
+  section { position:relative; padding:96px 0; }
+  .sec-head { text-align:center; max-width:720px; margin:0 auto 60px; }
+  .sec-head h2 { font-size:clamp(2.1rem,4.5vw,3.4rem); margin:16px 0 14px; }
+  .sec-head p { color:var(--muted); font-size:1.1rem; }
+
+  /* ---------- PAIN ---------- */
+  .pain { background:linear-gradient(180deg, var(--bg), var(--bg-2)); }
+  .pain-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  @media(max-width:860px){ .pain-grid{ grid-template-columns:1fr; } }
+  .pain-card {
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:30px; transition:transform .2s, border-color .2s;
+  }
+  .pain-card:hover { transform:translateY(-6px); border-color:rgba(255,91,26,.4); }
+  .pain-ico { font-size:1.7rem; width:56px; height:56px; border-radius:14px; display:grid; place-items:center; background:rgba(255,91,26,.1); margin-bottom:18px; }
+  .pain-card h3 { font-size:1.2rem; margin-bottom:8px; }
+  .pain-card p { color:var(--muted); font-size:.96rem; }
+
+  /* ---------- SOLUTION / STEPS ---------- */
+  .steps-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  @media(max-width:860px){ .steps-grid{ grid-template-columns:1fr; } }
+  .step {
+    position:relative; background:linear-gradient(160deg,var(--bg-3),var(--bg-2));
+    border:1px solid var(--line); border-radius:var(--radius); padding:34px 30px;
+  }
+  .step .num { font-family:'Anton'; font-size:3.4rem; line-height:1; color:transparent; -webkit-text-stroke:1.5px var(--neon); opacity:.55; }
+  .step h3 { font-size:1.28rem; margin:12px 0 10px; }
+  .step p { color:var(--muted); font-size:.97rem; }
+
+  /* ---------- BENEFITS ---------- */
+  .benefits { background:var(--bg-2); }
+  .ben-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; max-width:900px; margin:0 auto; }
+  @media(max-width:720px){ .ben-grid{ grid-template-columns:1fr; } }
+  .ben { display:flex; gap:16px; align-items:flex-start; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px 24px; }
+  .ben .check { flex:0 0 auto; width:28px; height:28px; border-radius:50%; background:var(--neon); color:#000; display:grid; place-items:center; font-weight:900; font-size:.9rem; }
+  .ben h4 { font-size:1.05rem; margin-bottom:3px; }
+  .ben p { color:var(--muted); font-size:.9rem; }
+
+  /* ---------- FORM ---------- */
+  .form-section { background:linear-gradient(180deg,var(--bg-2),var(--bg)); }
+  .form-shell {
+    max-width:860px; margin:0 auto; position:relative;
+    background:linear-gradient(165deg,var(--bg-3),var(--bg-2));
+    border:1px solid var(--line); border-radius:26px; padding:clamp(28px,5vw,54px);
+    box-shadow:0 50px 90px -40px rgba(0,0,0,.9);
+  }
+  .form-shell::before {
+    content:""; position:absolute; inset:-1px; border-radius:26px; z-index:-1;
+    background:linear-gradient(135deg,rgba(198,255,46,.55),transparent 45%,rgba(255,91,26,.45));
+  }
+  .form-head { text-align:center; margin-bottom:38px; }
+  .form-head h2 { font-size:clamp(2rem,4.5vw,3rem); margin:14px 0 10px; }
+  .form-head p { color:var(--muted); }
+
+  form .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  form .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  @media(max-width:640px){ form .grid2, form .grid3{ grid-template-columns:1fr; } }
+
+  .field { margin-bottom:20px; display:flex; flex-direction:column; }
+  .field label { font-size:.82rem; font-weight:700; letter-spacing:.4px; margin-bottom:9px; color:var(--text); }
+  .field label .req { color:var(--orange); }
+  .field .hint { font-weight:400; color:var(--muted); font-size:.76rem; }
+  .field input, .field select, .field textarea {
+    width:100%; background:var(--bg); border:1px solid var(--line); border-radius:12px;
+    color:var(--text); padding:14px 16px; font-family:inherit; font-size:.98rem;
+    transition:border-color .18s, box-shadow .18s, background .18s;
+  }
+  .field textarea { resize:vertical; min-height:96px; }
+  .field input::placeholder, .field textarea::placeholder { color:#5f5f6b; }
+  .field select { appearance:none; -webkit-appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23c6ff2e' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 16px center; padding-right:42px;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline:none; border-color:var(--neon); background:var(--bg-3);
+    box-shadow:0 0 0 4px rgba(198,255,46,.14);
+  }
+  .field.invalid input, .field.invalid select, .field.invalid textarea { border-color:var(--orange); box-shadow:0 0 0 4px rgba(255,91,26,.12); }
+  .err-msg { color:var(--orange-2); font-size:.78rem; margin-top:6px; display:none; }
+  .field.invalid .err-msg { display:block; }
+
+  .submit-wrap { margin-top:14px; text-align:center; }
+  .btn-submit {
+    width:100%; font-family:'Inter'; font-weight:900; font-size:1.15rem; letter-spacing:.4px;
+    background:linear-gradient(135deg,var(--neon),var(--orange)); color:#000;
+    border:none; border-radius:16px; padding:22px; cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:center; gap:12px;
+    box-shadow:0 20px 45px -12px rgba(198,255,46,.5); transition:transform .16s, box-shadow .2s, filter .2s;
+  }
+  .btn-submit:hover { transform:translateY(-3px); filter:brightness(1.05); }
+  .btn-submit:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+  .form-fine { margin-top:18px; color:var(--muted); font-size:.82rem; text-align:center; display:flex; align-items:center; justify-content:center; gap:8px; }
+
+  /* success */
+  .success { display:none; text-align:center; padding:20px 10px; }
+  .success.show { display:block; animation:pop .4s ease; }
+  @keyframes pop { from{opacity:0; transform:scale(.94)} to{opacity:1; transform:scale(1)} }
+  .success .icon { width:82px; height:82px; margin:0 auto 22px; border-radius:50%; background:var(--neon); color:#000; display:grid; place-items:center; font-size:2.4rem; box-shadow:0 0 0 10px rgba(198,255,46,.12); }
+  .success h3 { font-family:'Anton'; font-size:2.1rem; margin-bottom:12px; }
+  .success p { color:var(--muted); max-width:460px; margin:0 auto; }
+
+  /* ---------- FAQ ---------- */
+  .faq-list { max-width:760px; margin:0 auto; }
+  .faq-item { border:1px solid var(--line); border-radius:14px; margin-bottom:14px; background:var(--surface); overflow:hidden; }
+  .faq-q { width:100%; text-align:left; background:none; border:none; color:var(--text); font-family:inherit; font-size:1.05rem; font-weight:700; padding:22px 24px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  .faq-q .pm { color:var(--neon); font-size:1.6rem; font-weight:400; transition:transform .25s; flex:0 0 auto; }
+  .faq-item.open .pm { transform:rotate(45deg); }
+  .faq-a { max-height:0; overflow:hidden; transition:max-height .3s ease; }
+  .faq-a p { padding:0 24px 22px; color:var(--muted); }
+
+  /* ---------- FINAL CTA ---------- */
+  .final { text-align:center; background:linear-gradient(180deg,var(--bg),var(--bg-2)); }
+  .final h2 { font-size:clamp(2.4rem,6vw,4.6rem); margin-bottom:20px; }
+  .final p { color:var(--muted); font-size:1.15rem; max-width:560px; margin:0 auto 34px; }
+
+  /* ---------- FOOTER ---------- */
+  footer { border-top:1px solid var(--line); padding:44px 0; background:var(--bg); }
+  .foot-inner { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+  footer .muted { color:var(--muted); font-size:.86rem; }
+  .foot-links { display:flex; gap:24px; }
+  .foot-links a { color:var(--muted); font-size:.86rem; transition:color .2s; }
+  .foot-links a:hover { color:var(--neon); }
+
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity:1; transform:none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="logo"><span class="bolt">⚡</span> FORJA</a>
+    <a href="#formulario" class="nav-cta">Crear mi rutina</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <span class="kicker">100% Gratis · Sin tarjeta · Sin excusas</span>
+      <h1 class="display">
+        Deja de sentirte<br><span class="stroke">perdido</span> en el<br><span class="neon-text">gimnasio.</span>
+      </h1>
+      <p class="lead">
+        Responde <strong>10 preguntas rápidas</strong> y recibe una rutina de entrenamiento
+        <strong>100% personalizada</strong> para tu nivel, tu tiempo y tu meta.
+        Sin pagar un personal trainer. Directo a tu correo.
+      </p>
+      <div class="hero-actions">
+        <a href="#formulario" class="btn-primary">Generar mi Plan Gratis <span class="arrow">→</span></a>
+        <a href="#como-funciona" class="btn-ghost">Ver cómo funciona</a>
+      </div>
+      <div class="trust-row">
+        <div class="avatars">
+          <span>💪</span><span>🔥</span><span>🏋️</span><span>⚡</span>
+        </div>
+        <div>
+          <div class="stars">★★★★★</div>
+          <small>+3.400 principiantes ya empezaron con paso firme</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero preview card -->
+    <div class="hero-card">
+      <span class="hc-label">Vista previa de tu plan</span>
+      <div class="hc-title">Rutina · 4 días / semana</div>
+      <div class="day-row">
+        <div><div class="day-name">Lunes</div><div class="day-focus">Empuje · Pecho & Tríceps</div></div>
+        <span class="day-badge">45 min</span>
+      </div>
+      <div class="day-row">
+        <div><div class="day-name">Martes</div><div class="day-focus">Tirón · Espalda & Bíceps</div></div>
+        <span class="day-badge">45 min</span>
+      </div>
+      <div class="day-row">
+        <div><div class="day-name">Jueves</div><div class="day-focus">Pierna & Core</div></div>
+        <span class="day-badge o">50 min</span>
+      </div>
+      <div class="day-row">
+        <div><div class="day-name">Viernes</div><div class="day-focus">Full Body · Fuerza</div></div>
+        <span class="day-badge o">45 min</span>
+      </div>
+      <div class="hc-foot">✅ Adaptado a tus lesiones y tu nivel real</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>SIN MIEDO <b>•</b> SIN EXCUSAS <b>•</b> CONSTANCIA <b>•</b> PROGRESO REAL <b>•</b> TU RITMO <b>•</b> FUERZA <b>•</b> </span>
+    <span>SIN MIEDO <b>•</b> SIN EXCUSAS <b>•</b> CONSTANCIA <b>•</b> PROGRESO REAL <b>•</b> TU RITMO <b>•</b> FUERZA <b>•</b> </span>
+  </div>
+</div>
+
+<!-- PAIN POINTS -->
+<section class="pain">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Te entendemos</span>
+      <h2 class="display">El gimnasio <span class="orange-text">no</span> tiene por qué intimidarte</h2>
+      <p>Todos empezamos igual: sin saber por dónde arrancar. La diferencia la hace tener un plan claro.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <div class="pain-ico">🤯</div>
+        <h3>"No sé qué ejercicios hacer"</h3>
+        <p>Entras, miras las máquinas y te bloqueas. Nosotros te damos el orden exacto, día por día.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-ico">💸</div>
+        <h3>"Un entrenador es carísimo"</h3>
+        <p>No necesitas pagar 200€ al mes. Este plan personalizado es completamente gratis.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-ico">😰</div>
+        <h3>"Me da vergüenza que me miren"</h3>
+        <p>Con un plan en la mano vas seguro, sabes qué toca y te mueves con propósito. Nadie te mira.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="como-funciona">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Así de simple</span>
+      <h2 class="display">Tu rutina en <span class="neon-text">3 pasos</span></h2>
+      <p>Menos de 2 minutos para tener un plan que un principiante tardaría meses en armar solo.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="num">01</div>
+        <h3>Cuéntanos sobre ti</h3>
+        <p>Tu nivel, tus días disponibles, tu tiempo por sesión y tu meta principal. Rápido y sin rodeos.</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">02</div>
+        <h3>Generamos tu plan</h3>
+        <p>Combinamos tus datos para armar una rutina lógica, progresiva y adaptada a tus limitaciones.</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">03</div>
+        <h3>Recíbelo en tu correo</h3>
+        <p>Te llega tu rutina lista para imprimir o abrir en el móvil. Solo tienes que presentarte y entrenar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Qué incluye</span>
+      <h2 class="display">Un plan hecho <span class="neon-text">para ti</span>, no genérico</h2>
+    </div>
+    <div class="ben-grid">
+      <div class="ben reveal"><div class="check">✓</div><div><h4>Adaptado a tu nivel</h4><p>Ya seas principiante total o estés retomando después de una pausa.</p></div></div>
+      <div class="ben reveal"><div class="check">✓</div><div><h4>Según tu tiempo real</h4><p>Sesiones de 30 min o de más de 1 hora: el plan se ajusta a lo que tienes.</p></div></div>
+      <div class="ben reveal"><div class="check">✓</div><div><h4>Enfocado en tu meta</h4><p>Bajar de peso, ganar músculo, resistencia o fuerza. Cada objetivo entrena distinto.</p></div></div>
+      <div class="ben reveal"><div class="check">✓</div><div><h4>Respeta tus lesiones</h4><p>Nos dices tus limitaciones y evitamos lo que pueda hacerte daño.</p></div></div>
+      <div class="ben reveal"><div class="check">✓</div><div><h4>Progresión clara</h4><p>Sabrás cómo avanzar semana a semana sin estancarte.</p></div></div>
+      <div class="ben reveal"><div class="check">✓</div><div><h4>Cero coste, cero letra pequeña</h4><p>Es gratis de verdad. Solo necesitamos tu correo para enviártelo.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section id="formulario" class="form-section">
+  <div class="wrap">
+    <div class="form-shell reveal">
+      <!-- form -->
+      <div id="formView">
+        <div class="form-head">
+          <span class="kicker">Empieza ahora</span>
+          <h2 class="display">Construye tu <span class="neon-text">rutina</span></h2>
+          <p>Rellena los campos y recibe tu plan personalizado en tu correo. Todos los campos son obligatorios.</p>
+        </div>
+
+        <form id="rutinaForm" novalidate>
+          <!-- Nombre + Email -->
+          <div class="grid2">
+            <div class="field">
+              <label for="nombre">Nombre completo <span class="req">*</span></label>
+              <input type="text" id="nombre" name="Nombre completo" placeholder="Ej: Ana Martínez" required />
+              <span class="err-msg">Escribe tu nombre.</span>
+            </div>
+            <div class="field">
+              <label for="email">Correo electrónico <span class="req">*</span> <span class="hint">(te enviaremos aquí el plan)</span></label>
+              <input type="email" id="email" name="Correo electrónico" placeholder="tucorreo@email.com" required />
+              <span class="err-msg">Introduce un correo válido.</span>
+            </div>
+          </div>
+
+          <!-- Edad + Peso + Altura -->
+          <div class="grid3">
+            <div class="field">
+              <label for="edad">Edad <span class="req">*</span></label>
+              <input type="number" id="edad" name="Edad" min="12" max="99" placeholder="Ej: 24" required />
+              <span class="err-msg">Edad entre 12 y 99.</span>
+            </div>
+            <div class="field">
+              <label for="peso">Peso actual (kg) <span class="req">*</span></label>
+              <input type="number" id="peso" name="Peso actual (kg)" min="30" max="300" step="0.1" placeholder="Ej: 72" required />
+              <span class="err-msg">Introduce tu peso en kg.</span>
+            </div>
+            <div class="field">
+              <label for="altura">Altura (cm) <span class="req">*</span></label>
+              <input type="number" id="altura" name="Altura (cm)" min="120" max="230" placeholder="Ej: 170" required />
+              <span class="err-msg">Introduce tu altura en cm.</span>
+            </div>
+          </div>
+
+          <!-- Experiencia + Días -->
+          <div class="grid2">
+            <div class="field">
+              <label for="nivel">Nivel de experiencia <span class="req">*</span></label>
+              <select id="nivel" name="Nivel de experiencia" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option>Principiante</option>
+                <option>Retomando</option>
+                <option>Intermedio</option>
+              </select>
+              <span class="err-msg">Elige tu nivel.</span>
+            </div>
+            <div class="field">
+              <label for="dias">Días disponibles por semana <span class="req">*</span></label>
+              <select id="dias" name="Dias disponibles para entrenar a la semana" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option>3 días</option>
+                <option>4 días</option>
+                <option>5 días</option>
+                <option>6 días</option>
+              </select>
+              <span class="err-msg">Elige cuántos días entrenas.</span>
+            </div>
+          </div>
+
+          <!-- Tiempo + Meta -->
+          <div class="grid2">
+            <div class="field">
+              <label for="tiempo">Tiempo disponible por sesión <span class="req">*</span></label>
+              <select id="tiempo" name="Tiempo disponible por sesion" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option>30 min</option>
+                <option>45 min</option>
+                <option>1 hora</option>
+                <option>Más de 1 hora</option>
+              </select>
+              <span class="err-msg">Elige tu tiempo por sesión.</span>
+            </div>
+            <div class="field">
+              <label for="meta">Meta principal <span class="req">*</span></label>
+              <select id="meta" name="Meta principal" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option>Bajar de peso</option>
+                <option>Aumentar masa muscular / Hipertrofia</option>
+                <option>Mejorar resistencia</option>
+                <option>Fuerza general</option>
+              </select>
+              <span class="err-msg">Elige tu objetivo.</span>
+            </div>
+          </div>
+
+          <!-- Lesiones -->
+          <div class="field">
+            <label for="lesiones">¿Tienes alguna lesión o limitación física que debamos considerar? <span class="req">*</span></label>
+            <textarea id="lesiones" name="Lesiones o limitaciones" placeholder="Ej: Molestia en la rodilla derecha al hacer sentadillas. Si no tienes ninguna, escribe 'Ninguna'." required></textarea>
+            <span class="err-msg">Cuéntanos tus limitaciones o escribe "Ninguna".</span>
+          </div>
+
+          <div class="submit-wrap">
+            <button type="submit" class="btn-submit" id="submitBtn">
+              🔥 Generar mi Plan de Entrenamiento Gratis
+            </button>
+            <p class="form-fine">🔒 Tus datos están seguros. Sin spam, solo tu rutina.</p>
+          </div>
+        </form>
+      </div>
+
+      <!-- success -->
+      <div class="success" id="successView">
+        <div class="icon">✓</div>
+        <h3>¡Tu plan está en camino! 💪</h3>
+        <p>Hemos recibido tus datos. En breve recibirás en tu correo tu rutina personalizada. Revisa también la bandeja de spam por si acaso. <strong style="color:var(--neon)">¡Nos vemos en el gimnasio!</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Dudas frecuentes</span>
+      <h2 class="display">Antes de <span class="neon-text">empezar</span></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">¿De verdad es gratis? <span class="pm">+</span></button>
+        <div class="faq-a"><p>Sí, 100%. No pedimos tarjeta ni hay cargos ocultos. Solo necesitamos tu correo para enviarte el plan.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Nunca he pisado un gimnasio, ¿es para mí? <span class="pm">+</span></button>
+        <div class="faq-a"><p>Justo para ti. Selecciona "Principiante" y armaremos una rutina progresiva y segura para que empieces con confianza.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Cuándo recibo mi rutina? <span class="pm">+</span></button>
+        <div class="faq-a"><p>Te llega a tu correo poco después de enviar el formulario. Recuerda revisar la carpeta de spam o promociones.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Tengo una lesión, ¿puedo entrenar igual? <span class="pm">+</span></button>
+        <div class="faq-a"><p>Cuéntanoslo en el formulario y adaptaremos los ejercicios. Aun así, ante una lesión seria, consulta siempre con un profesional de la salud.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="kicker">Es tu momento</span>
+      <h2 class="display">La mejor versión<br>de ti <span class="orange-text">empieza hoy</span></h2>
+      <p>Deja de dudar. Consigue tu plan gratis y da el primer paso con seguridad.</p>
+      <a href="#formulario" class="btn-primary">Construir mi Rutina Ahora <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot-inner">
+    <a href="#" class="logo" style="font-size:1.2rem;"><span class="bolt" style="width:28px;height:28px;font-size:.9rem;">⚡</span> FORJA</a>
+    <p class="muted">© 2026 FORJA · Entrena con propósito.</p>
+    <div class="foot-links">
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#formulario">Crear rutina</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   CONFIGURACIÓN GOOGLE SHEETS
+   Pega aquí la URL de tu Web App de Google Apps Script.
+   (Instrucciones más abajo en el chat.)
+   ============================================================ */
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyTaIjmsyRMnS2Rw-EOHai_7Xx-pWuOCqRUhor-zUW3oSjuXtpKpgtOfyUJSGdgNBpS/exec";
+
+/* ---------- Reveal on scroll ---------- */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{ threshold:0.14 });
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- FAQ accordion ---------- */
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
+    const item = q.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>{ i.classList.remove('open'); i.querySelector('.faq-a').style.maxHeight=null; });
+    if(!wasOpen){ item.classList.add('open'); const a=item.querySelector('.faq-a'); a.style.maxHeight=a.scrollHeight+'px'; }
+  });
+});
+
+/* ---------- Form validation + submit ---------- */
+const form = document.getElementById('rutinaForm');
+const submitBtn = document.getElementById('submitBtn');
+
+function markField(el, ok){
+  const field = el.closest('.field');
+  field.classList.toggle('invalid', !ok);
+}
+
+form.querySelectorAll('input,select,textarea').forEach(el=>{
+  el.addEventListener('blur',()=> markField(el, el.checkValidity() && el.value.trim()!==''));
+  el.addEventListener('input',()=>{ if(el.closest('.field').classList.contains('invalid')) markField(el, el.checkValidity() && el.value.trim()!==''); });
+});
+
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  let valid = true;
+  form.querySelectorAll('input,select,textarea').forEach(el=>{
+    const ok = el.checkValidity() && el.value.trim()!=='';
+    markField(el, ok);
+    if(!ok) valid=false;
+  });
+  if(!valid){
+    const firstErr = form.querySelector('.field.invalid');
+    if(firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+
+  submitBtn.disabled = true;
+  const originalTxt = submitBtn.innerHTML;
+  submitBtn.innerHTML = '⏳ Generando tu plan...';
+
+  // Construye el payload con los nombres EXACTOS de las columnas
+  const data = new FormData(form);
+
+  try {
+    if (GOOGLE_SHEET_URL && !GOOGLE_SHEET_URL.startsWith("PEGA_AQUI")) {
+      await fetch(GOOGLE_SHEET_URL, { method:'POST', body:data });
+    } else {
+      // Modo demo: sin URL configurada. Simula el envío.
+      await new Promise(r=>setTimeout(r,900));
+      console.warn('⚠️ GOOGLE_SHEET_URL no configurada. Datos capturados:', Object.fromEntries(data.entries()));
+    }
+    // Mostrar éxito
+    document.getElementById('formView').style.display='none';
+    const s = document.getElementById('successView');
+    s.classList.add('show');
+    s.scrollIntoView({behavior:'smooth', block:'center'});
+  } catch(err){
+    console.error(err);
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalTxt;
+    alert('Ups, hubo un problema al enviar. Revisa tu conexión e inténtalo de nuevo.');
+  }
+});
+</script>
+</body>
+</html>
