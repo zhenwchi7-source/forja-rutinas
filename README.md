@@ -9,8 +9,8 @@ FORJA es un producto que, a partir de un formulario, genera una **rutina de gimn
 
 ## 1 · Identificación
 
-- **Grupo:** `[RELLENAR: nombre del grupo]`
-- **Integrantes:** `[RELLENAR: nombres]`
+- **Grupo:** FORJA
+- **Integrantes:** Javier Venegas · Raimundo Bravo · Tomás Núñez · Zhen Chi
 - **Track:** B — Producto propio
 - **Tipo declarado:** MVP (producto propio con modelo de negocio freemium)
 
@@ -58,16 +58,22 @@ flowchart TD
 
 **Flujo de datos resumido:** el formulario web escribe en Google Sheets → n8n se dispara con cada fila nueva → Gemini genera/ajusta la rutina → se crea/lee la hoja de seguimiento del cliente → el resultado llega por correo. Un flujo de Error Trigger vigila y avisa si algo falla.
 
+**Flujo de rutina inicial en n8n:**
+![Flujo rutina inicial](evidencia/01-flujo-rutina-inicial.png)
+
+**Flujo de seguimiento en n8n:**
+![Flujo seguimiento](evidencia/02-flujo-seguimiento.png)
+
 ---
 
 ## 5 · Las 4 verticales
 
 | Vertical | Capa cumplida | Evidencia |
 |---|---|---|
-| **Automatización** | Capa 1 | `/src/flujo/*.json` + screenshots en `/evidencia/`. Gatillo por fila nueva (Google Sheets Trigger) y los 3 mecanismos de error: **Retries** (nodo Gemini), **Continue on Fail** (On Error→Continue en nodos clave) y **Error Trigger** (`3-error-trigger.json`). |
-| **IA** | Capa 1 (+ Capa 2 probable) | `/src/prompts/*.md`. Llamada a Gemini integrada al flujo; el resultado se usa para crear la hoja y el correo. **Guardrail (Capa 2):** la IA devuelve **JSON validado contra un esquema** en un nodo Code antes de usarse. |
-| **BBDD** | Capa 1 | Google Sheet con pestañas `general`, `seguimiento`, `hojas_clientes` + una hoja por cliente. Estructura explicada en §7. |
-| **Front / Touchpoint** | Capa 1 (+ Capa 2) | Landing propia publicada (§6). **Capa 2:** UI propia funcional construida con IDE agéntico, con 2 formularios integrados al backend. |
+| **Automatización** | Capa 1 | [`/src/flujo/`](src/flujo/). Gatillo por fila nueva (Google Sheets Trigger) y los 3 mecanismos de error: **Retries** + **Continue on Fail** ([captura](evidencia/03-retry-continue.png)) y **Error Trigger** ([flujo](evidencia/04-error-trigger.png) · [configurado como Error Workflow](evidencia/04b-error-workflow-settings.png)). |
+| **IA** | Capa 1 | [`/src/prompts/`](src/prompts/). Llamada a Gemini integrada al flujo; el resultado se usa para crear la hoja y el correo. Como refuerzo, la IA devuelve **JSON que se valida en un nodo Code** (guardrail) antes de usarse. *(La Capa 2 de IA —agente con herramientas / multi-agente / RAG— no está implementada.)* |
+| **BBDD** | Capa 1 | Google Sheet con pestañas [`general`](evidencia/05-sheet-general.png), [`hojas_clientes`](evidencia/05b-hojas-clientes.png) y [`seguimiento`](evidencia/05c-seguimiento.png) + una hoja por cliente. Estructura en [`/src/bbdd/estructura.md`](src/bbdd/estructura.md). |
+| **Front / Touchpoint** | Capa 1 (+ Capa 2) | Landing propia publicada (§6, [captura](evidencia/06-landing.png)). **Capa 2:** UI propia funcional construida con IDE agéntico, con 2 formularios integrados al backend. |
 
 ---
 
@@ -77,6 +83,11 @@ flowchart TD
 - **Por qué canal:** web (GitHub Pages), sin instalar nada, accesible desde móvil.
 - **Dónde recibe el resultado:** por **correo electrónico**, unos segundos después. La rutina inicial incluye un **link a su hoja de seguimiento** editable.
 - **Landing en vivo:** https://zhenwchi7-source.github.io/forja-rutinas/
+
+![Landing FORJA](evidencia/06-landing.png)
+
+**Ejemplo del resultado — correo con la rutina ajustada según los datos reales del cliente:**
+![Correo rutina ajustada](evidencia/09-correo-ajustada.png)
 
 ---
 
@@ -105,7 +116,7 @@ Principiantes y "retomadores" de gimnasio (18–35 años principalmente) que no 
 - **Poder de compradores (alto):** hay muchas alternativas gratis; por eso el modelo parte gratis y cobra solo el seguimiento continuo.
 - **Sustitutos (alto):** personal trainer, gimnasio con asesoría, simplemente rendirse. Competimos en precio y conveniencia.
 
-**Referentes identificados:** `[RELLENAR: 3-5 competidores concretos, ej. Fitbod, Freeletics, Hevy, Caliverse, entrenadores de Instagram]`.
+**Referentes identificados:** Hevy, Caliverse y Fitbod.
 
 ### FODA
 - **Fortalezas:** personalización real + loop de ajuste por datos; costo casi nulo de operación; onboarding sin fricción (solo un formulario).
@@ -146,10 +157,10 @@ Principiantes y "retomadores" de gimnasio (18–35 años principalmente) que no 
 
 | Integrante | Responsabilidad principal |
 |---|---|
-| `[RELLENAR]` | `[ej. Landing / Front]` |
-| `[RELLENAR]` | `[ej. Flujos n8n / IA]` |
-| `[RELLENAR]` | `[ej. BBDD / integración Google]` |
-| `[RELLENAR]` | `[ej. Track B / investigación de mercado]` |
+| Javier Venegas | Landing / Front |
+| Raimundo Bravo | BBDD, integración con Google y Track B |
+| Tomás Núñez | BBDD, integración con Google y Track B |
+| Zhen Chi | Automatización (n8n), integración de IA (Gemini) y QA/validación end-to-end |
 
 ---
 
