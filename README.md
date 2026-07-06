@@ -128,8 +128,19 @@ Principiantes y "retomadores" de gimnasio (18–35 años principalmente) que no 
 - **Debilidades:** sin app nativa; depende de que el usuario registre sus pesos; marca inexistente.
 - **Amenazas:** competidores grandes con más recursos; cambios de precio de las APIs de IA; usuarios que no vuelven.
 
-### Prueba de demanda — 5 conversaciones
-`[RELLENAR / EVIDENCIA: ver /evidencia/conversaciones/ — mínimo 5 conversaciones reales con usuarios potenciales. Resumir aquí los principales hallazgos: ¿el dolor existe? ¿pagarían? ¿cuánto?]`
+### Prueba de demanda — conversaciones con usuarios
+Entrevistamos a potenciales usuarios (evidencia en [`/evidencia/conversaciones/`](evidencia/conversaciones/)). Les preguntamos: (1) cómo eligen su rutina y qué les frustra sin un plan, (2) si han pagado o pagarían por un personal trainer y cuánto, (3) si usarían una rutina personalizada gratis, y (4) si pagarían **$4.990/mes** por una IA que registra sus pesos y les dice cuándo subirlos.
+
+**Hallazgos (3 entrevistas realizadas; se completará a 5):**
+
+- **Uso del plan gratis: 3 de 3** usarían la rutina personalizada gratuita.
+- **Disposición a pagar el plan Pro: 3 de 3** dijeron que pagarían los $4.990/mes; lo describieron como *"buen precio"* y *"un precio accesible"*. Valida el punto de precio elegido.
+- **Barrera del personal trainer confirmada:** solo 1 de 3 había pagado por uno (≈$45.000 por 3 meses); los demás nunca pagaron y se mostraron reticentes → confirma el hueco de precio que FORJA llena.
+- **Motor de valor #1 — ver el progreso:** *"es muy útil ver cómo es el progreso semana a semana con los pesos"* (Rafa). Valida directamente el loop de seguimiento.
+- **Motor de valor #2 — ahorrar tiempo:** *"uno pierde tiempo pensando qué hacer; una rutina establecida te ahorra tiempo y te permite llevar registro de tu progreso"* (Sebacho).
+- **Motor de valor #3 — descubrir ejercicios nuevos:** *"me ayudaría bastante en recomendarme ejercicios personales que no conozco"* (Ignacio).
+- **El mercado es más amplio de lo previsto:** incluso un usuario avanzado (entrena desde los 14, estudió kinesiología) ve valor para *"potenciar el rendimiento y maximizar el tiempo invertido en el gimnasio"* → el producto sirve más allá del principiante.
+- **Insight de riesgo (credibilidad):** un entrevistado condiciona su uso a que la información sea *"basada en la evidencia"* → la credibilidad científica es un factor clave y un punto a reforzar (respaldo/guardrails).
 
 ### Modelo de negocio
 - **Freemium:** plan **Prueba** gratis (rutina inicial + 1 seguimiento) y plan **FORJA Pro** a **$4.990 CLP/mes** (seguimientos ilimitados, progresión automática, historial, cambio de meta, soporte).
