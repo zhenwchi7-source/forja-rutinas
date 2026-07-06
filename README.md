@@ -5,6 +5,10 @@
 
 FORJA es un producto que, a partir de un formulario, genera una **rutina de gimnasio personalizada con IA**, la entrega por correo junto con una **hoja de seguimiento** donde el usuario registra sus pesos, y luego **ajusta automáticamente las cargas** según su progreso real.
 
+**🎥 Video demo (5 min):** https://www.youtube.com/watch?v=nHguDA1Ad2c
+
+[![Ver la demo de FORJA](https://img.youtube.com/vi/nHguDA1Ad2c/hqdefault.jpg)](https://www.youtube.com/watch?v=nHguDA1Ad2c)
+
 ---
 
 ## 1 · Identificación

@@ -14,8 +14,11 @@ Capturas recomendadas:
 - [ ] Los **correos** recibidos (rutina inicial y rutina ajustada).
 - [ ] La pestaña **Executions** de n8n mostrando ejecuciones exitosas.
 
-## 2. Video de demo (`demo.mp4`, 1–2 min)
-Guion sugerido:
+## 2. Video de demo
+**▶️ En YouTube (no listado):** https://www.youtube.com/watch?v=nHguDA1Ad2c
+*(No se sube el archivo al repo por su tamaño; se enlaza desde aquí y desde el README.)*
+
+Guion:
 1. Muestra la landing y rellena el formulario inicial (10 seg).
 2. Muestra la fila cayendo en el Google Sheet (5 seg).
 3. Muestra el flujo de n8n ejecutándose en verde (10 seg).
